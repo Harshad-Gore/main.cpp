@@ -1,4 +1,4 @@
-//ideal calci
+//** ideal calc **
 #include <iostream>
 using namespace std;
 
