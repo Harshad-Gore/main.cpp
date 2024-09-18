@@ -1,33 +1,35 @@
 #include <iostream>
 using namespace std;
 
-class harshad
-{
-public:
+class Harshad {
     string urName;
-    int price;
     string carName;
+    int price;
     int bYear;
 
-    void takeInput()
-    {
-        cout << "Enter your name:";
+public:
+    Harshad() {
+        cout << "Enter your name: ";
         cin >> urName;
-        cout << "Enter name of your car:";
+        cout << "Enter name of your car: ";
         cin >> carName;
-        cout << "Price of the car:";
+        cout << "Price of the car: ";
         cin >> price;
-        cout << "Enter model year of the car:";
+        cout << "Enter model year of the car: ";
         cin >> bYear;
     }
-    void display()
-    {
-        
+
+    void display() {
+        cout << "\n---- Car Details ----" << endl;
+        cout << "Your Name: " << urName << endl;
+        cout << "Car Name: " << carName << endl;
+        cout << "Price of the Car: $" << price << endl;
+        cout << "Model Year: " << bYear << endl;
     }
 };
-int main()
-{
-    harshad harsh;
-    harsh.takeInput();
+
+int main() {
+    Harshad harsh;
+    harsh.display();
     return 0;
 }

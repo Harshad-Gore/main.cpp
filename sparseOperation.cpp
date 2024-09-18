@@ -8,6 +8,8 @@ class sparse
     int len;
 
 public:
+    sparse() {}
+
     sparse(int r, int c, int v)
     {
         sp[0][0] = r;
@@ -27,6 +29,8 @@ public:
     void fast_tr(sparse s1);
 
     void editMat(sparse s1);
+
+    void multi(sparse s1, sparse s2);
 };
 
 void sparse ::insert(int row, int col, int val)
@@ -158,13 +162,71 @@ void sparse::fast_tr(sparse s1)
         sp[x][2] = s1.sp[i][2];
     }
 }
-//Edit elements of sparse matrix
-void sparse::editMat(sparse s1){
-    for (int i = 0; i < s1.sp[0][1];i++){
-        sp[0][0]=s1.sp[i][0];
-        sp[0][1]=s1.sp[i][1];
-        sp[0][2]=s1.sp[i][2];
+void sparse::editMat(sparse s1)
+{
+    for (int i = 0; i < s1.sp[0][1]; i++)
+    {
+        sp[0][0] = s1.sp[i][0];
+        sp[0][1] = s1.sp[i][1];
+        sp[0][2] = s1.sp[i][2];
     }
+}
+void sparse::multi(sparse s1, sparse s2)
+{
+    if (s1.sp[0][1] != s2.sp[0][0])
+    {
+        cout << "Cannot Multiply" << endl;
+        return;
+    }
+    sparse s4 = s2.transpose();
+    sparse result(s1.sp[0][0], s2.sp[0][1], 0);
+
+    int i = 1, k = 1;
+    while (i <= s1.len)
+    {
+        int row = s1.sp[i][0];
+        for (int j = 1; j <= s4.len;)
+        {
+            int col = s4.sp[j][0];
+            int sum = 0;
+            int a = i, b = j;
+
+            while (a <= s1.len && b <= s4.len && s1.sp[a][0] == row && s4.sp[b][0] == col)
+            {
+                if (s1.sp[a][1] == s4.sp[b][1])
+                {
+                    sum += s1.sp[a][2] * s4.sp[b][2];
+                    a++;
+                    b++;
+                }
+                else if (s1.sp[a][1] < s4.sp[b][1])
+                {
+                    a++;
+                }
+                else
+                {
+                    b++;
+                }
+            }
+            if (sum != 0)
+            {
+                result.sp[k][0] = row;
+                result.sp[k][1] = col;
+                result.sp[k][2] = sum;
+                k++;
+            }
+
+            while (j <= s4.len && s4.sp[j][0] == col)
+                j++;
+        }
+        while (i <= s1.len && s1.sp[i][0] == row)
+            i++;
+    }
+
+    result.sp[0][2] = k - 1;
+    result.len = k - 1;
+
+    result.display();
 }
 
 int main()
@@ -187,36 +249,68 @@ int main()
         cin >> r;
         cout << "Enter column number: ";
         cin >> c;
-        cout << "Enter the value: ";
+        cout << "Enter value: ";
         cin >> v;
         s1.insert(r, c, v);
     }
 
+    cout << "The 1st sparse matrix is: " << endl;
     s1.display();
 
+    int r2, c2, v2;
     cout << "Enter the number of rows of 2nd sparse matrix: ";
-    cin >> r1;
+    cin >> r2;
     cout << "Enter the number of columns of 2nd sparse matrix: ";
-    cin >> c1;
+    cin >> c2;
     cout << "Enter the number of non-zero values of 2nd sparse matrix: ";
-    cin >> v1;
+    cin >> v2;
 
-    sparse s2(r1, c1, v1);
+    sparse s2(r2, c2, v2);
 
-    for (int i = 0; i < v1; i++)
+    for (int i = 0; i < v2; i++)
     {
         cout << "Enter row number: ";
         cin >> r;
         cout << "Enter column number: ";
         cin >> c;
-        cout << "Enter the value: ";
+        cout << "Enter value: ";
         cin >> v;
         s2.insert(r, c, v);
     }
 
+    cout << "The 2nd sparse matrix is: " << endl;
     s2.display();
 
-    s1.add(s2);
+    int option;
+    cout << "Enter 1 to Add matrices, 2 to Multiply matrices, 3  transpose , 4 Fast transpose";
+    cin >> option;
+
+    switch (option)
+    {
+    case 1:
+        s1.add(s2);
+        break;
+
+    case 2:
+        s1.multi(s1, s2);
+        break;
+
+    case 3:
+        s1.transpose();
+        break;
+
+    case 4:
+        s1.fast_tr(s1);
+        break;
+
+    case 5:
+        cout << "exit" << endl;
+        break;
+    default:
+        cout << "Invalid Option" << endl;
+        break;
+    }
 
     return 0;
+    while (option != 5);
 }

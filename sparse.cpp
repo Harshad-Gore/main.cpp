@@ -16,7 +16,7 @@ public:
 	}
 	void insert(int row,int col,int val);
 	void display();
-	void transpose(sparse &s1);
+	void transpose(sparse s1);
 };
 
 void sparse::insert(int row, int col, int val) {
@@ -37,7 +37,7 @@ void sparse::display() {
 	}
 }
 
-void sparse::transpose(sparse &s1) {
+void sparse::transpose(sparse s1) {
 	int i, j, k = 1;
 	sp[0][0] = s1.sp[0][1]; 
 	sp[0][1] = s1.sp[0][0];

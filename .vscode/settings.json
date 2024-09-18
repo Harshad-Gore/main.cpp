@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "algorithm": "cpp"
-    }
-}
+        "algorithm": "cpp",
+        "iostream": "cpp"
+    },
+    "cSpell.words": [
+        "cgpa",
+        "getdata",
+        "prndata",
+        "tptr"
+    ],
+ }
