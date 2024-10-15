@@ -196,7 +196,7 @@ int main()
                 while ( p->next != NULL)
                      p = p->next ;
              p->next = temp;
-            temp->prev = p; 
+            temp->prev = p;
          }
   cout<<“\nDo you want to add more nodes (y/n)”;
  cin>>ch;
