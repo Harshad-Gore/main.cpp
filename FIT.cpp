@@ -9,5 +9,7 @@ int main() {
         cin>>x;
         // your code goes here
             cout << "\n"<<2*x*5;
+
     }
+    return 0;
 }
