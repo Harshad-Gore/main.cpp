@@ -4,6 +4,7 @@ using namespace std;
 
 class student
 {
+public:
     string name;
     int marks;
     int rollno;
