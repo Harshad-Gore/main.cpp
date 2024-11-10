@@ -25,11 +25,7 @@ public:
     }
     bool isEmpty()
     {
-        if (front == NULL && rear == NULL)
-        {
-            return true;
-        }
-        return false;
+        return front == NULL && rear == NULL;
     }
     void enqueue(string value)
     {
@@ -49,8 +45,6 @@ public:
     }
     void insertAtFront(node *asap)
     {
-        // cout << "Enter the data." << endl;
-        // cin >> asap->data;
         if (isEmpty())
         {
             front = rear = asap;
@@ -64,8 +58,6 @@ public:
     }
     void insertAtRear(node *asap)
     {
-        // cout << "Enter the data." << endl;
-        // cin >> asap->data;
         if (isEmpty())
         {
             front = rear = asap;
@@ -85,12 +77,12 @@ public:
         }
         else if (front == rear)
         {
+            delete front;
             front = rear = NULL;
         }
         else
         {
-            node *temp;
-            temp = front;
+            node *temp = front;
             front = front->next;
             front->prev = NULL;
             delete temp;
@@ -104,12 +96,12 @@ public:
         }
         else if (front == rear)
         {
+            delete rear;
             front = rear = NULL;
         }
         else
         {
-            node *temp;
-            temp = rear;
+            node *temp = rear;
             rear = rear->prev;
             rear->next = NULL;
             delete temp;
@@ -126,9 +118,10 @@ public:
             node *temp = front;
             while (temp != NULL)
             {
-                cout << temp->data << endl;
+                cout << temp->data << " ";
                 temp = temp->next;
             }
+            cout << endl;
         }
     }
 };
@@ -148,7 +141,7 @@ int main()
         case 1:
             do
             {
-                cout << "1.Insert at rear.\n2.Insert at front.\n3.Delete front.\n4.Delete rear.\n5.Exit." << endl;
+                cout << "1.Insert at rear.\n2.Delete front.\n3.Delete rear.\n4.Display.\n5.Exit." << endl;
                 cin >> ch2;
                 switch (ch2)
                 {
@@ -160,18 +153,15 @@ int main()
                     break;
 
                 case 2:
-                    temp = new node;
-                    cout << "Enter the data." << endl;
-                    cin >> temp->data;
-                    q1.insertAtRear(temp);
-                    break;
-
-                case 3:
                     q1.delAtFront();
                     break;
 
-                case 4:
+                case 3:
                     q1.delAtRear();
+                    break;
+
+                case 4:
+                    q1.display();
                     break;
 
                 case 5:
@@ -188,7 +178,7 @@ int main()
         case 2:
             do
             {
-                cout << "1.Insert at rear.\n2.Insert at front.\n3.Delete front.\n4.Delete rear.\n5.Exit." << endl;
+                cout << "1.Insert at front.\n2.Delete front.\n3.Delete rear.\n4.Display.\n5.Exit." << endl;
                 cin >> ch3;
                 switch (ch3)
                 {
@@ -196,22 +186,19 @@ int main()
                     temp = new node;
                     cout << "Enter the data." << endl;
                     cin >> temp->data;
-                    q2.insertAtRear(temp);
+                    q2.insertAtFront(temp);
                     break;
 
                 case 2:
-                    temp = new node;
-                    cout << "Enter the data." << endl;
-                    cin >> temp->data;
-                    q2.insertAtRear(temp);
-                    break;
-
-                case 3:
                     q2.delAtFront();
                     break;
 
-                case 4:
+                case 3:
                     q2.delAtRear();
+                    break;
+
+                case 4:
+                    q2.display();
                     break;
 
                 case 5:
@@ -229,11 +216,9 @@ int main()
             break;
 
         default:
-            cout << "Enter  a valid choice." << endl;
+            cout << "Enter a valid choice." << endl;
             break;
         }
     } while (choice != 3);
-    q1.display();
-    q2.display();
     return 0;
 }

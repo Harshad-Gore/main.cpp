@@ -43,8 +43,6 @@ void sll::create()
         temp = new node();
         cout << "Enter Name of Student:\n";
         cin >> temp->name;
-        // cin.ignore();
-        // getline(cin, temp->name);
         cout << "Enter PRN:\n";
         cin >> temp->prn;
         cout << "Enter CGPA:\n";
@@ -86,8 +84,6 @@ void sll::insertBegin()
     temp = new node();
     cout << "Enter Name of Student:\n";
     cin >> temp->name;
-    // cin.ignore();
-    // getline(cin, temp->name);
     cout << "Enter PRN:\n";
     cin >> temp->prn;
     cout << "Enter CGPA:\n";
@@ -111,8 +107,6 @@ void sll::append()
 
     cout << "Enter Name of Student:\n";
     cin >> temp->name;
-    // cin.ignore();
-    // getline(cin, temp->name);
     cout << "Enter PRN:\n";
     cin >> temp->prn;
     cout << "Enter CGPA:\n";
@@ -132,14 +126,134 @@ void sll::append()
         p->next = temp;
     }
 }
+
+void sll::insertAfter()
+{
+    int prn_search;
+    cout << "Enter PRN after which to insert:\n";
+    cin >> prn_search;
+
+    node *temp = new node();
+    cout << "Enter Name of Student:\n";
+    cin >> temp->name;
+    cout << "Enter PRN:\n";
+    cin >> temp->prn;
+    cout << "Enter CGPA:\n";
+    cin >> temp->cgpa;
+
+    node *p = head;
+    while (p != NULL && p->prn != prn_search)
+    {
+        p = p->next;
+    }
+    if (p != NULL)
+    {
+        temp->next = p->next;
+        p->next = temp;
+    }
+    else
+    {
+        cout << "PRN not found.\n";
+    }
+}
+
+void sll::delNode()
+{
+    int prn_del;
+    cout << "Enter PRN of node to delete:\n";
+    cin >> prn_del;
+
+    node *p = head, *prev = NULL;
+    while (p != NULL && p->prn != prn_del)
+    {
+        prev = p;
+        p = p->next;
+    }
+    if (p == NULL)
+    {
+        cout << "PRN not found.\n";
+        return;
+    }
+    if (prev == NULL)
+    {
+        head = p->next;
+    }
+    else
+    {
+        prev->next = p->next;
+    }
+    delete p;
+}
+
+void sll::search()
+{
+    int prn_search;
+    cout << "Enter PRN to search:\n";
+    cin >> prn_search;
+
+    node *p = head;
+    while (p != NULL)
+    {
+        if (p->prn == prn_search)
+        {
+            cout << "Found: " << p->name << ", CGPA: " << p->cgpa << endl;
+            return;
+        }
+        p = p->next;
+    }
+    cout << "PRN not found.\n";
+}
+
+void sll::update()
+{
+    int prn_update;
+    cout << "Enter PRN to update:\n";
+    cin >> prn_update;
+
+    node *p = head;
+    while (p != NULL)
+    {
+        if (p->prn == prn_update)
+        {
+            cout << "Enter new Name:\n";
+            cin >> p->name;
+            cout << "Enter new CGPA:\n";
+            cin >> p->cgpa;
+            return;
+        }
+        p = p->next;
+    }
+    cout << "PRN not found.\n";
+}
+
 void sll::sort()
 {
-    node *p = head;
+    node *p, *q;
+    for (p = head; p != NULL; p = p->next)
+    {
+        for (q = p->next; q != NULL; q = q->next)
+        {
+            if (p->prn > q->prn)
+            {
+                string tempName = p->name;
+                p->name = q->name;
+                q->name = tempName;
+
+                int tempPrn = p->prn;
+                p->prn = q->prn;
+                q->prn = tempPrn;
+
+                float tempCgpa = p->cgpa;
+                p->cgpa = q->cgpa;
+                q->cgpa = tempCgpa;
+            }
+        }
+    }
 }
+
 int main()
 {
     sll so;
-    char ch;
     int choice;
     do
     {
@@ -170,35 +284,29 @@ int main()
         case 4:
             so.append();
             break;
+        case 5:
+            so.insertAfter();
+            break;
+        case 6:
+            so.delNode();
+            break;
+        case 7:
+            so.search();
+            break;
+        case 8:
+            so.update();
+            break;
         case 9:
             so.sort();
+            break;
         case 10:
-            cout << "Exiting.." << endl;
+            cout << "Exiting..\n";
+            break;
         default:
-            cout << "Enter valid choice." << endl;
+            cout << "Enter valid choice.\n";
             break;
         }
     } while (choice != 10);
 
     return 0;
 }
-/*
-{  node *temp, *p;
-    char ch;
-  do
-  {     temp = new node;
-         cout<<“Enter data”;
-         cin>>temp->val;  temp->next = NULL; temp->prev = NULL;
-         if( head == NULL)
-          head = temp;
-         else
-          {    p =head;
-                while ( p->next != NULL)
-                     p = p->next ;
-             p->next = temp;
-            temp->prev = p;
-         }
-  cout<<“\nDo you want to add more nodes (y/n)”;
- cin>>ch;
-while(ch == ‘y’);
-*/

@@ -1,7 +1,11 @@
 {
     "files.associations": {
         "algorithm": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "random": "cpp",
+        "limits": "cpp",
+        "valarray": "cpp"
     },
     "cSpell.words": [
         "cgpa",

@@ -55,10 +55,59 @@ public:
         }
     }
 };
+bool isSafe(int grid[MAX][MAX], int row, int col, int num)
+{
+    for (int x = 0; x < MAX; x++)
+    {
+        if (grid[row][x] == num || grid[x][col] == num)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool solveSudoku(int grid[MAX][MAX], int row, int col)
+{
+    if (row == MAX - 1 && col == MAX)
+    {
+        return true;
+    }
+    if (col == MAX)
+    {
+        row++;
+        col = 0;
+    }
+    if (grid[row][col] > 0)
+    {
+        return solveSudoku(grid, row, col + 1);
+    }
+    for (int num = 1; num <= MAX; num++)
+    {
+        if (isSafe(grid, row, col, num))
+        {
+            grid[row][col] = num;
+            if (solveSudoku(grid, row, col + 1))
+            {
+                return true;
+            }
+        }
+        grid[row][col] = 0;
+    }
+    return false;
+}
+
 int main()
 {
     sudoku su;
     su.takeInput();
-    su.display();
+    if (solveSudoku(su.grid, 0, 0))
+    {
+        su.display();
+    }
+    else
+    {
+        cout << "No solution exists" << endl;
+    }
     return 0;
 }

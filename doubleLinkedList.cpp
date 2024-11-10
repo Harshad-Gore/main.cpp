@@ -134,12 +134,62 @@ int marklist::countNodes()
 marklist marklist::merge(marklist l1, marklist l2)
 {
     marklist l3;
-    node *p,*q,*r;
-    if (p->marks> q->marks)
+    node *p = l1.head;
+    node *q = l2.head;
+    node *r = nullptr;
+
+    while (p != nullptr && q != nullptr)
     {
-        l3->head;
+        node *temp = new node;
+        if (p->marks < q->marks)
+        {
+            temp->rollNo = p->rollNo;
+            temp->marks = p->marks;
+            p = p->next;
+        }
+        else
+        {
+            temp->rollNo = q->rollNo;
+            temp->marks = q->marks;
+            q = q->next;
+        }
+
+        if (l3.head == nullptr)
+        {
+            l3.head = temp;
+            r = l3.head;
+        }
+        else
+        {
+            r->next = temp;
+            temp->prev = r;
+            r = r->next;
+        }
     }
 
+    while (p != nullptr)
+    {
+        node *temp = new node;
+        temp->rollNo = p->rollNo;
+        temp->marks = p->marks;
+        r->next = temp;
+        temp->prev = r;
+        r = r->next;
+        p = p->next;
+    }
+
+    while (q != nullptr)
+    {
+        node *temp = new node;
+        temp->rollNo = q->rollNo;
+        temp->marks = q->marks;
+        r->next = temp;
+        temp->prev = r;
+        r = r->next;
+        q = q->next;
+    }
+
+    return l3;
 }
 
 int main()

@@ -1,10 +1,9 @@
-/*insert delete display update*/
 #include <iostream>
 using namespace std;
 class node
 {
 public:
-    int PizzaID;
+    int PizzaName;
     int pizzaPrice;
     string pizzaType;
     string toppings;
@@ -26,7 +25,7 @@ public:
     }
     void takeOrder();
     void showOrder();
-    void cancelOrder();
+    void deliverOrder();
     void updateOrder();
     void searchOrder();
 };
@@ -37,7 +36,7 @@ void orderPizza::takeOrder()
     {
         node *temp = new node();
         cout << "Enter Order ID:\n";
-        cin >> temp->PizzaID;
+        cin >> temp->PizzaName;
         cout << "Enter quantity of the pizza:" << endl;
         cin >> temp->qyt;
         cout << "Enter Pizza Price:\n";
@@ -71,7 +70,7 @@ void orderPizza::showOrder()
     node *temp = head;
     do
     {
-        cout << "Pizza: " << temp->PizzaID << endl;
+        cout << "Pizza: " << temp->PizzaName << endl;
         cout << "Quantity: " << temp->qyt << endl;
         cout << "Price: " << temp->pizzaPrice << endl;
         cout << "Toppings: " << temp->toppings << endl;
@@ -79,39 +78,27 @@ void orderPizza::showOrder()
         temp = temp->next;
     } while (temp != head);
 }
-void orderPizza::cancelOrder()
-{
-    int id;
-    cout << "Enter the Order ID you want to cancel:" << endl;
-    cin >> id;
-    node *temp = head;
-    node *p;
-    if (temp->PizzaID == id)
-    {
-        if (head->next == head)
-        {
-            p = head;
-            head = NULL;
-            p->next = NULL;
-            delete (p);
-        }
-        else
-        {
-            p = head;
-            while (p->next != head)
-            {
-                p = p->next;
-            }
-            p->next = head->next;
-            p = head;
-            head = head->next;
-            p->next = NULL;
-            delete (p);
-        }
+void orderPizza::deliverOrder() {
+    if (head == NULL) {
+        cout << "No orders to deliver!\n";
+        return;
     }
-    else
-    {
-        cout << "No order found:" << endl;
+    node* temp = head;
+    if (head->next == head) {
+        head = NULL;
+        delete temp;
+        cout << "Delivered the order successfully!\n";
+    }
+    else {
+        node* p = head;
+        while (p->next != head) {
+            p = p->next;
+        }
+        p->next = head->next;
+        head = head->next;
+        temp->next = NULL;
+        delete temp;
+        cout << "Delivered the order successfully!\n";
     }
 }
 void orderPizza::searchOrder()
@@ -125,10 +112,10 @@ void orderPizza::searchOrder()
     {
         do
         {
-            if (temp->PizzaID == id)
+            if (temp->PizzaName == id)
             {
                 cout << "Order found:" << endl;
-                cout << "Pizza: " << temp->PizzaID << endl;
+                cout << "Pizza: " << temp->PizzaName << endl;
                 cout << "Quantity: " << temp->qyt << endl;
                 cout << "Price: " << temp->pizzaPrice << endl;
                 cout << "Toppings: " << temp->toppings << endl;
@@ -155,7 +142,7 @@ void orderPizza::updateOrder()
     {
         do
         {
-            if (temp->PizzaID == id)
+            if (temp->PizzaName == id)
             {
                 cout << "Order found....." << endl;
                 cout << "Enter new quantity of the pizza:" << endl;
@@ -180,9 +167,40 @@ void orderPizza::updateOrder()
 int main()
 {
     orderPizza pizza;
-    pizza.takeOrder();
-    pizza.cancelOrder();
-    pizza.searchOrder();
-    pizza.showOrder();
+    int choice;
+    do {
+        cout << "\n--- Pizza Service Menu ---\n";
+        cout << "1. Take Order\n";
+        cout << "2. Show Orders\n";
+        cout << "3. Deliver Order\n";
+        cout << "4. Update Order\n";
+        cout << "5. Search Order\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                pizza.takeOrder();
+                break;
+            case 2:
+                pizza.showOrder();
+                break;
+            case 3:
+                pizza.deliverOrder();
+                break;
+            case 4:
+                pizza.updateOrder();
+                break;
+            case 5:
+                pizza.searchOrder();
+                break;
+            case 6:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 6);
     return 0;
 }
