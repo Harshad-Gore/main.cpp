@@ -48,8 +48,8 @@ public:
 int main()
 {
     HashTable hashTable;
-    int data[] = {10, 5, 4, 14, 15, 20, 11, 1, 6, 16, 36, 28};
-    for (int i = 0; i < 12; i++)
+    int data[] = {10, 5, 4, 14, 15, 20, 11, 1, 6};
+    for (int i = 0; i < 9; i++)
     {
         hashTable.insert(data[i]);
     }

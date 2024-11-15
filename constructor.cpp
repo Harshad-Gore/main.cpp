@@ -1,14 +1,16 @@
 #include <iostream>
 using namespace std;
 
-class Harshad {
+class Harshad
+{
     string urName;
     string carName;
     int price;
     int bYear;
 
 public:
-    Harshad() {
+    Harshad()
+    {
         cout << "Enter your name: ";
         cin >> urName;
         cout << "Enter name of your car: ";
@@ -19,7 +21,8 @@ public:
         cin >> bYear;
     }
 
-    void display() {
+    void display()
+    {
         cout << "\n---- Car Details ----" << endl;
         cout << "Your Name: " << urName << endl;
         cout << "Car Name: " << carName << endl;
@@ -28,7 +31,8 @@ public:
     }
 };
 
-int main() {
+int main()
+{
     Harshad harsh;
     harsh.display();
     return 0;

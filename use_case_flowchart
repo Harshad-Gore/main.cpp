@@ -1,0 +1,16 @@
+digraph UseCaseFlowchart {
+	rankdir=TB size="8,5"
+	Start [label=Start shape=oval]
+	InputText [label="Input Text Data" shape=rectangle]
+	Preprocess [label="Preprocess Text Data" shape=rectangle]
+	FeatureExtraction [label="Extract Features" shape=rectangle]
+	Model [label="Run Sentiment Analysis Model" shape=rectangle]
+	Output [label="Generate Sentiment Result" shape=rectangle]
+	End [label=End shape=oval]
+	Start -> InputText
+	InputText -> Preprocess
+	Preprocess -> FeatureExtraction
+	FeatureExtraction -> Model
+	Model -> Output
+	Output -> End
+}
