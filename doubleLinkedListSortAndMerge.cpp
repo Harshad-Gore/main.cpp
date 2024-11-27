@@ -103,13 +103,13 @@ void marklist::bubbleSort(int cnt)
     {
         h = &(head);
         swapped = 0;
-        for(int j =0; j < cnt - i - 1; j++)
+        for (int j = 0; j < cnt - i - 1; j++)
         {
             node *p1 = *h;
             node *p2 = p1->next;
-            if(p1->marks>p2->marks)
+            if (p1->marks > p2->marks)
             {
-                *h = swap(p1,p2);
+                *h = swap(p1, p2);
                 swapped = 1;
             }
             h = &(*h)->next;
@@ -194,10 +194,10 @@ marklist marklist::merge(marklist l1, marklist l2)
 
 int main()
 {
-    marklist m1,l1,l2,l3;
+    marklist m1, l1, l2, l3;
     m1.create();
     int cnt = m1.countNodes();
     m1.bubbleSort(cnt);
     m1.print();
-    return 0;   
+    return 0;
 }
