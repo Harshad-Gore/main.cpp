@@ -3,16 +3,29 @@ using namespace std;
 
 #define SIZE 20
 
+class Node
+{
+public:
+    int key;
+    Node *next;
+
+    Node(int k)
+    {
+        key = k;
+        next = NULL;
+    }
+};
+
 class HashTable
 {
 public:
-    int table[SIZE];
+    Node *table[SIZE];
 
     HashTable()
     {
         for (int i = 0; i < SIZE; i++)
         {
-            table[i] = -1;
+            table[i] = NULL;
         }
     }
 
@@ -24,57 +37,66 @@ public:
     void insert(int key)
     {
         int index = hashFunction(key);
-        while (table[index] != -1)
+        Node *newNode = new Node(key);
+        if (table[index] == NULL)
         {
-            index = (index + 1) % SIZE;
+            table[index] = newNode;
         }
-        table[index] = key;
+        else
+        {
+            Node *temp = table[index];
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    bool search(int key)
+    {
+        int index = hashFunction(key);
+        Node *temp = table[index];
+        while (temp != NULL)
+        {
+            if (temp->key == key)
+            {
+                return true;
+            }
+            temp = temp->next;
+        }
+        return false;
     }
 
     void display()
     {
         for (int i = 0; i < SIZE; i++)
         {
-            if (table[i] != -1)
-                cout << i << " : " << table[i] << endl;
-            else
-                cout << i << " : NULL" << endl;
-        }
-    }
-
-    void search(int key)
-    {
-        int index = hashFunction(key);
-        int startIndex = index;
-        while (table[index] != key)
-        {
-            index = (index + 1) % SIZE;
-            if (index == startIndex || table[index] == -1)
+            cout << "Index " << i << ": ";
+            Node *temp = table[i];
+            while (temp != NULL)
             {
-                cout << "Key " << key << " not found" << endl;
-                return;
+                cout << temp->key << " -> ";
+                temp = temp->next;
             }
+            cout << "NULL" << endl;
         }
-        cout << "Key " << key << " found at index " << index << endl;
     }
 };
 
 int main()
 {
     HashTable ht;
-    int data[] = {33, 56, 78, 12, 10, 67, 89, 99, 100, 23, 45, 71, 39, 62, 59, 90, 91, 20, 75, 66};
-
-    for (int i = 0; i < 20; i++)
-    {
-        ht.insert(data[i]);
-    }
+    ht.insert(10);
+    ht.insert(20);
+    ht.insert(30);
+    ht.insert(40);
+    ht.insert(50);
 
     ht.display();
 
-    int key;
-    cout << "Enter key to search: ";
-    cin >> key;
-    ht.search(key);
+    cout << "Search 30: " << (ht.search(30) ? "Found" : "Not Found") << endl;
+    cout << "Search 100: " << (ht.search(100) ? "Found" : "Not Found") << endl;
 
     return 0;
 }

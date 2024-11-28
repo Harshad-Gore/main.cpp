@@ -40,6 +40,7 @@ public:
         if (isFull())
         {
             cout << "The queue is full." << endl;
+            return;
         }
         else if (isEmpty())
         {
