@@ -93,6 +93,9 @@ private:
             return 0;
         return height(node->left) - height(node->right);
     }
+    void rotateRight(){
+        
+    }
 };
 
 int main()
