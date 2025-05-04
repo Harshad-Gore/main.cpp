@@ -109,6 +109,35 @@ public:
 
         return temp;
     }
+    void inorder(node *temp)
+    {
+        if (temp == NULL)
+            return;
+
+        inorder(temp->left);
+        cout << temp->data << " ";
+        inorder(temp->right);
+    }
+    void preorder(node *temp)
+    {
+        if (temp == NULL)
+            return;
+        cout << temp->data << " ";
+        preorder(temp->left);
+        preorder(temp->right);
+    }
+    void postorder(node *temp)
+    {
+        if (temp == NULL)
+            return;
+        postorder(temp->left);
+        postorder(temp->right);
+        cout << temp->data << " ";
+    }
+    node *remove()
+    {
+        
+    }
 };
 
 int main()
